@@ -7,6 +7,7 @@ import 'package:ricj_and_morti/core/di/service_locator.dart';
 import 'package:ricj_and_morti/core/theme/app_colors.dart';
 import 'package:ricj_and_morti/core/theme/app_text_styles.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character.dart';
+import 'package:ricj_and_morti/features/characters/domain/entities/character_enums.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_bloc.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_event.dart';
 import 'package:ricj_and_morti/features/characters/presentation/pages/favorites_page.dart';
@@ -27,6 +28,10 @@ class _CharacterListPageState extends State<CharacterListPage> {
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
   Timer? _debounce;
+
+  bool _showFilters = false;
+  CharacterStatus _selectedStatus = CharacterStatus.all;
+  CharacterGender _selectedGender = CharacterGender.all;
 
   @override
   void initState() {
@@ -108,19 +113,75 @@ class _CharacterListPageState extends State<CharacterListPage> {
               actions: [
                 _ActionButton(
                   icon: _isSearching ? Icons.close : Icons.search,
-                  onTap:_toggleSearch,
+                  onTap: _toggleSearch,
                 ),
-              if (!_isSearching)  _ActionButton(icon: Icons.filter_list, onTap: () {}),
+                if (!_isSearching)
+                  _ActionButton(
+                    icon: Icons.filter_list,
+                    onTap: () {
+                      setState(() {
+                        _showFilters = !_showFilters;
+                        print(_showFilters);
+                      });
+                    },
+                  ),
                 const SizedBox(width: 16),
               ],
             ),
             // 2. Заголовок Characters (ниже кнопок)
-             SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(left: 16, bottom: 16, top: 8),
-                child: _isSearching ? _buildSearchField() : Text('Characters', style: AppTextStyles.h1),
+                child: _isSearching
+                    ? _buildSearchField()
+                    : Text('Characters', style: AppTextStyles.h1),
               ),
             ),
+
+        
+              SliverToBoxAdapter(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+
+                  height: _showFilters ? 110 : 0,
+                  child: _showFilters
+                      ? SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
+                        child: Column(
+                            children: [
+                              // Строка статусов
+                              _buildFilterRow(
+                                items: CharacterStatus.values,
+                                selectedItem: _selectedStatus,
+                                onSelected: (val) {
+                                  setState(() => _selectedStatus = val);
+                                  _bloc.add(
+                                    CharacterEvent.fetchCharacters(
+                                      status: val.value,
+                                    ),
+                                  );
+                                },
+                              ),
+                              // Строка гендера
+                              _buildFilterRow(
+                                items: CharacterGender.values,
+                                selectedItem: _selectedGender,
+                                onSelected: (val) {
+                                  setState(() => _selectedGender = val);
+                                  _bloc.add(
+                                    CharacterEvent.fetchCharacters(
+                                      gender: val.value,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                      )
+                      : const SizedBox.shrink(),
+                ),
+              ),
+
             // 3. Список персонажей
             PagedSliverList<int, Character>(
               key: ValueKey(
@@ -164,6 +225,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
       },
     );
   }
+
   Widget _buildSearchField() {
     return TextField(
       controller: _searchController,
@@ -172,7 +234,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: 'Search characters...',
-        hintStyle: TextStyle(color: Colors.white.withValues(alpha:  0.5)),
+        hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
         prefixIcon: const Icon(Icons.search, color: AppColors.primary),
         filled: true,
         fillColor: AppColors.surface,
@@ -181,6 +243,36 @@ class _CharacterListPageState extends State<CharacterListPage> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
+      ),
+    );
+  }
+
+
+  Widget _buildFilterRow<T extends Enum>({
+    required List<T> items,
+    required T selectedItem,
+    required Function(T) onSelected,
+  }) {
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          final isSelected = item == selectedItem;
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: ChoiceChip(
+              label: Text(item.name.toUpperCase()),
+              selected: isSelected,
+              onSelected: (_) => onSelected(item),
+              selectedColor: AppColors.primary,
+              backgroundColor: AppColors.surface,
+            ),
+          );
+        },
       ),
     );
   }

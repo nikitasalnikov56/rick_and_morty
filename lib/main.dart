@@ -31,14 +31,14 @@ class RickAndMortyApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: AppColors.background,
         primaryColor: AppColors.primary,
-        // Настройка глобального стиля BottomNavigationBar
+        
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: AppColors.surface,
           selectedItemColor: AppColors.primary,
           unselectedItemColor: AppColors.textSecondary,
         ),
       ),
-      home: const CharacterListPage(), // Стартовый экран
+      home: const CharacterListPage(), 
     );
   }
 }

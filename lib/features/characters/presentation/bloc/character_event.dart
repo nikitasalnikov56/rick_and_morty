@@ -6,6 +6,8 @@ class CharacterEvent with _$CharacterEvent {
   const factory CharacterEvent.fetchCharacters({
     @Default(false) bool isRefresh,
     String? name,
+    String? status, 
+  String? gender,
   }) = FetchCharacters;
   const factory CharacterEvent.toggleFavorite(int id) = ToggleFavorite;
 }

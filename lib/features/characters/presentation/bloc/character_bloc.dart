@@ -8,6 +8,8 @@ import 'character_event.dart';
 class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
   final CharacterRepository repository;
   String _currentSearchName = '';
+  String _currentStatus = '';
+  String _currentGender = '';
 
   CharacterBloc(this.repository) : super(PagingState()) {
     on<FetchCharacters>(_onFetchCharacters);
@@ -22,18 +24,24 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
     if (state.isLoading && !event.isRefresh && event.name == null) return;
     final bool isSearchChanged =
         event.name != null && event.name != _currentSearchName;
-    final bool shouldReset = event.isRefresh || isSearchChanged;
+    final bool isStatusChanged =
+        event.status != null && event.status != _currentStatus;
+        final bool isGenderChanged = event.gender != null && event.gender != _currentGender;
+    final bool shouldReset =
+        event.isRefresh || isSearchChanged || isStatusChanged || isGenderChanged;
 
     if (shouldReset) {
       _currentSearchName =
           event.name ?? (event.isRefresh ? _currentSearchName : '');
-      // Сбрасываем стейт в начальный перед загрузкой первой страницы
+      _currentStatus = event.status ?? (event.isRefresh ? _currentStatus : '');
+      _currentGender = event.gender ?? (event.isRefresh ? _currentGender : '');
+
       emit(PagingState(isLoading: true, error: null));
     } else {
       emit(state.copyWith(isLoading: true, error: null));
     }
 
-    // emit(state.copyWith(isLoading: true, error: null));
+ 
 
     try {
       final pageKey = shouldReset ? 1 : (state.keys?.last ?? 0) + 1;
@@ -41,12 +49,13 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
       final List<Character> newItems = await repository.getCharacters(
         page: pageKey,
         name: _currentSearchName,
+        status: _currentStatus,
+        gender: _currentGender,
       );
 
       final isLastPage = newItems.length < 20;
 
       if (shouldReset) {
-        // Заменяем всё новыми данными
         emit(
           PagingState(
             pages: [newItems],

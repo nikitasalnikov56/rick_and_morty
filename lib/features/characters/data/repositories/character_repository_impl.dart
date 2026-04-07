@@ -5,25 +5,38 @@ import 'package:ricj_and_morti/features/characters/domain/entities/character.dar
 abstract interface class CharacterRepository {
   CharacterRepository();
 
-  Future<List<Character>> getCharacters({required int page, String? name});
+  Future<List<Character>> getCharacters({
+    required int page,
+    String? name,
+    String? status,
+    String? gender,
+  });
 }
 
 class CharacterRepositoryImpl implements CharacterRepository {
   final CharacterRemoteDataSource remoteDataSource;
-
 
   Box<Character> get _cacheBox => Hive.box<Character>('characters_box');
 
   CharacterRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<Character>> getCharacters({required int page, String? name}) async {
+  Future<List<Character>> getCharacters({
+    required int page,
+    String? name,
+    String? status,
+    String? gender,
+  }) async {
     try {
-      final models = await remoteDataSource.getCharacters(page, name: name);
+      final models = await remoteDataSource.getCharacters(
+        page,
+        name: name,
+        status: status,
+        gender: gender,
+      );
 
       final remoteCharacters = models.map((m) => m.toEntity()).toList();
 
-    
       for (var char in remoteCharacters) {
         final bool isAlreadyFavorite =
             _cacheBox.get(char.id)?.isFavorite ?? false;
@@ -33,9 +46,9 @@ class CharacterRepositoryImpl implements CharacterRepository {
         );
       }
 
-      return remoteCharacters.map((e)=> _cacheBox.get(e.id)!).toList();
+      return remoteCharacters.map((e) => _cacheBox.get(e.id)!).toList();
     } catch (e) {
-      if (name != null && name.isNotEmpty) {
+      if ((name != null && name.isNotEmpty) || (status != null && status.isNotEmpty)) {
         rethrow;
       }
       if (_cacheBox.isNotEmpty) {

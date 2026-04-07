@@ -5,12 +5,19 @@ class CharacterRemoteDataSource {
   final Dio _dio;
   CharacterRemoteDataSource(this._dio);
 
-  Future<List<CharacterModel>> getCharacters(int page, {String? name}) async {
+  Future<List<CharacterModel>> getCharacters(
+    int page, {
+    String? name,
+    String? status,
+    String? gender,
+  }) async {
     final response = await _dio.get(
       '/character',
       queryParameters: {
         'page': page,
         if (name != null && name.isNotEmpty) 'name': name,
+        if (status != null && status.isNotEmpty) 'status': status,
+        if (gender != null && gender.isNotEmpty) 'gender': gender,
       },
     );
 
