@@ -7,6 +7,8 @@ import 'character_event.dart';
 
 class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
   final CharacterRepository repository;
+  String _currentSearchName = '';
+
   CharacterBloc(this.repository) : super(PagingState()) {
     on<FetchCharacters>(_onFetchCharacters);
     on<ToggleFavorite>(_onToggleFavorite);
@@ -17,25 +19,52 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
     FetchCharacters event,
     Emitter<PagingState<int, Character>> emit,
   ) async {
-    if (state.isLoading) return;
+    if (state.isLoading && !event.isRefresh && event.name == null) return;
+    final bool isSearchChanged =
+        event.name != null && event.name != _currentSearchName;
+    final bool shouldReset = event.isRefresh || isSearchChanged;
 
-    emit(state.copyWith(isLoading: true, error: null));
+    if (shouldReset) {
+      _currentSearchName =
+          event.name ?? (event.isRefresh ? _currentSearchName : '');
+      // Сбрасываем стейт в начальный перед загрузкой первой страницы
+      emit(PagingState(isLoading: true, error: null));
+    } else {
+      emit(state.copyWith(isLoading: true, error: null));
+    }
+
+    // emit(state.copyWith(isLoading: true, error: null));
 
     try {
-      final pageKey = (state.keys?.last ?? 0) + 1;
+      final pageKey = shouldReset ? 1 : (state.keys?.last ?? 0) + 1;
 
-      final List<Character> newItems = await repository.getCharacters(pageKey);
-     
-      final isLastPage = newItems.length < 20; 
-
-      emit(
-        state.copyWith(
-          pages: [...?state.pages, newItems],
-          keys: [...?state.keys, pageKey],
-          hasNextPage: !isLastPage,
-          isLoading: false,
-        ),
+      final List<Character> newItems = await repository.getCharacters(
+        page: pageKey,
+        name: _currentSearchName,
       );
+
+      final isLastPage = newItems.length < 20;
+
+      if (shouldReset) {
+        // Заменяем всё новыми данными
+        emit(
+          PagingState(
+            pages: [newItems],
+            keys: [pageKey],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            pages: [...?state.pages, newItems],
+            keys: [...?state.keys, pageKey],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+          ),
+        );
+      }
     } catch (e) {
       String message = "Произошла неизвестная ошибка";
 
@@ -52,8 +81,6 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
     }
   }
 
- 
-
   void _onToggleFavorite(
     ToggleFavorite event,
     Emitter<PagingState<int, Character>> emit,
@@ -66,14 +93,13 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
             isFavorite: !character.isFavorite,
           );
           box.put(updatedChar.id, updatedChar);
-          
+
           return updatedChar;
         }
         return character;
       }).toList();
     }).toList();
 
- 
     emit(state.copyWith(pages: updatedPages));
   }
 }

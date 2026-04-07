@@ -5,12 +5,18 @@ class CharacterRemoteDataSource {
   final Dio _dio;
   CharacterRemoteDataSource(this._dio);
 
-  Future<List<CharacterModel>> getCharacters(int page) async {
-    final response = await _dio.get('/character', queryParameters: {'page': page});
-    
+  Future<List<CharacterModel>> getCharacters(int page, {String? name}) async {
+    final response = await _dio.get(
+      '/character',
+      queryParameters: {
+        'page': page,
+        if (name != null && name.isNotEmpty) 'name': name,
+      },
+    );
+
     if (response.statusCode == 200) {
       final data = CharacterResponse.fromJson(response.data);
-      return data.results; 
+      return data.results;
     } else {
       throw Exception('Server Error');
     }

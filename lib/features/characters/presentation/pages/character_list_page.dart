@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +24,10 @@ class _CharacterListPageState extends State<CharacterListPage> {
   late final PagingController<int, Character> _pagingController;
   int _selectedIndex = 0;
 
+  bool _isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
+  Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
@@ -38,9 +44,28 @@ class _CharacterListPageState extends State<CharacterListPage> {
 
   @override
   void dispose() {
+    _searchController.dispose();
+    _debounce?.cancel();
     _pagingController.dispose();
     _bloc.close();
     super.dispose();
+  }
+
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _bloc.add(CharacterEvent.fetchCharacters(name: query));
+    });
+  }
+
+  void _toggleSearch() {
+    setState(() {
+      _isSearching = !_isSearching;
+      if (!_isSearching) {
+        _searchController.clear();
+        _bloc.add(const CharacterEvent.fetchCharacters(name: ''));
+      }
+    });
   }
 
   @override
@@ -81,16 +106,19 @@ class _CharacterListPageState extends State<CharacterListPage> {
               floating: true,
               elevation: 0,
               actions: [
-                _ActionButton(icon: Icons.search, onTap: () {}),
-                _ActionButton(icon: Icons.filter_list, onTap: () {}),
+                _ActionButton(
+                  icon: _isSearching ? Icons.close : Icons.search,
+                  onTap:_toggleSearch,
+                ),
+              if (!_isSearching)  _ActionButton(icon: Icons.filter_list, onTap: () {}),
                 const SizedBox(width: 16),
               ],
             ),
             // 2. Заголовок Characters (ниже кнопок)
-            const SliverToBoxAdapter(
+             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(left: 16, bottom: 16, top: 8),
-                child: Text('Characters', style: AppTextStyles.h1),
+                child: _isSearching ? _buildSearchField() : Text('Characters', style: AppTextStyles.h1),
               ),
             ),
             // 3. Список персонажей
@@ -136,6 +164,26 @@ class _CharacterListPageState extends State<CharacterListPage> {
       },
     );
   }
+  Widget _buildSearchField() {
+    return TextField(
+      controller: _searchController,
+      autofocus: true,
+      onChanged: _onSearchChanged,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        hintText: 'Search characters...',
+        hintStyle: TextStyle(color: Colors.white.withValues(alpha:  0.5)),
+        prefixIcon: const Icon(Icons.search, color: AppColors.primary),
+        filled: true,
+        fillColor: AppColors.surface,
+        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
 }
 
 // Кнопки в AppBar
@@ -160,7 +208,6 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
-
 
 class _CustomBottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -198,7 +245,7 @@ class _CustomBottomNavBar extends StatelessWidget {
 class _ErrorWidget extends StatelessWidget {
   final VoidCallback onRetry;
   final String? message;
-  const _ErrorWidget({required this.onRetry, this.message,});
+  const _ErrorWidget({required this.onRetry, this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +253,7 @@ class _ErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Text(message ?? "Something went wrong", style: AppTextStyles.label),
+          Text(message ?? "Something went wrong", style: AppTextStyles.label),
           const SizedBox(height: 12),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
@@ -231,8 +278,10 @@ class _NewPageErrorWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            const Text("Ошибка загрузки. Нажмите, чтобы повторить", 
-              style: TextStyle(color: Colors.white70)),
+            const Text(
+              "Ошибка загрузки. Нажмите, чтобы повторить",
+              style: TextStyle(color: Colors.white70),
+            ),
             const SizedBox(height: 8),
             const Icon(Icons.refresh, color: AppColors.primary),
           ],

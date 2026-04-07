@@ -5,7 +5,7 @@ import 'package:ricj_and_morti/features/characters/domain/entities/character.dar
 abstract interface class CharacterRepository {
   CharacterRepository();
 
-  Future<List<Character>> getCharacters(int page);
+  Future<List<Character>> getCharacters({required int page, String? name});
 }
 
 class CharacterRepositoryImpl implements CharacterRepository {
@@ -17,9 +17,9 @@ class CharacterRepositoryImpl implements CharacterRepository {
   CharacterRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<Character>> getCharacters(int page) async {
+  Future<List<Character>> getCharacters({required int page, String? name}) async {
     try {
-      final models = await remoteDataSource.getCharacters(page);
+      final models = await remoteDataSource.getCharacters(page, name: name);
 
       final remoteCharacters = models.map((m) => m.toEntity()).toList();
 
@@ -35,6 +35,9 @@ class CharacterRepositoryImpl implements CharacterRepository {
 
       return remoteCharacters.map((e)=> _cacheBox.get(e.id)!).toList();
     } catch (e) {
+      if (name != null && name.isNotEmpty) {
+        rethrow;
+      }
       if (_cacheBox.isNotEmpty) {
         return _cacheBox.values.toList();
       }
