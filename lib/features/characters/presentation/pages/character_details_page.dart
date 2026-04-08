@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ricj_and_morti/core/theme/app_colors.dart';
 import 'package:ricj_and_morti/core/theme/app_text_styles.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character.dart';
 import 'package:ricj_and_morti/core/utils/hero_shape_clipper.dart'; // Твой клиппер
@@ -13,9 +12,9 @@ class CharacterDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         title: Text(character.name, style: AppTextStyles.characterName),
       ),
@@ -39,29 +38,29 @@ class CharacterDetailsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            _buildInfoSection(),
+            _buildInfoSection(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoSection() {
+  Widget _buildInfoSection(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
         children: [
           _buildInfoRow('Status', character.status),
-          const Divider(color: Colors.white10),
+           Divider(color: Theme.of(context).dividerColor),
           _buildInfoRow('Species', character.species),
-          const Divider(color: Colors.white10),
+           Divider(color: Theme.of(context).dividerColor),
           _buildInfoRow('Gender', character.gender),
-          const Divider(color: Colors.white10),
+           Divider(color: Theme.of(context).dividerColor),
           _buildInfoRow('Location', character.location),
         ],
       ),

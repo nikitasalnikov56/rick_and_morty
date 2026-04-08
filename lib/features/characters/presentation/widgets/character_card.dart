@@ -16,7 +16,7 @@ class CharacterCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -68,7 +68,7 @@ class CharacterCard extends StatelessWidget {
                       Text(
                         character.location,
                         style: AppTextStyles.label.copyWith(
-                          color: AppColors.textPrimary,
+                          color:Theme.of(context).textTheme.titleMedium?.color,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

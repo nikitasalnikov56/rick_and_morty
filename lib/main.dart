@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:ricj_and_morti/core/theme/app_theme.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character.dart';
+import 'package:ricj_and_morti/features/characters/presentation/bloc/theme/theme_cubit.dart';
 import 'package:ricj_and_morti/features/characters/presentation/pages/character_list_page.dart';
 import 'core/di/service_locator.dart';
 import 'core/theme/app_colors.dart';
@@ -14,10 +17,15 @@ void main() async {
   }
 
   await Hive.openBox<Character>('characters_box');
- 
+
   setupLocator();
 
-  runApp(const RickAndMortyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => getIt<ThemeCubit>(),
+      child: const RickAndMortyApp(),
+    ),
+  );
 }
 
 class RickAndMortyApp extends StatelessWidget {
@@ -25,21 +33,18 @@ class RickAndMortyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Rick and Morty',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: AppColors.background,
-        primaryColor: AppColors.primary,
-        
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: AppColors.surface,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: AppColors.textSecondary,
-        ),
-      ),
-      home: const CharacterListPage(), 
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, currentThemeMode) {
+        return MaterialApp(
+          title: 'Rick and Morty',
+          debugShowCheckedModeBanner: false,
+          themeMode: currentThemeMode,
+          theme: AppThemes.lightTheme,
+          darkTheme: AppThemes.darkTheme,
+          
+          home: const CharacterListPage(),
+        );
+      },
     );
   }
 }

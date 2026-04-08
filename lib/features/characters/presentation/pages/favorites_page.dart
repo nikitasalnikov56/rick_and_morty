@@ -15,6 +15,7 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CharacterBloc, PagingState<int, Character>>(
       builder: (context, state) {
+        final theme = Theme.of(context);
         final favoriteCharacters =
             state.pages
                 ?.expand((page) => page)
@@ -24,8 +25,8 @@ class FavoritesPage extends StatelessWidget {
 
         return CustomScrollView(
           slivers: [
-            const SliverAppBar(
-              backgroundColor: AppColors.background,
+             SliverAppBar(
+              backgroundColor: theme.scaffoldBackgroundColor,
               floating: true,
               elevation: 0,
               title: Text('Favorites', style: AppTextStyles.h1),
@@ -42,7 +43,7 @@ class FavoritesPage extends StatelessWidget {
                     Text(
                       "You havenn't added any\nfavorites yet. Go explore!",
                       style: AppTextStyles.characterName.copyWith(
-                        color: AppColors.textPrimary.withValues(alpha: 0.6)
+                        color: theme.textTheme.titleMedium?.color!.withValues(alpha: 0.6)
                       ),
                       textAlign: TextAlign.center,
                     ),

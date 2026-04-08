@@ -11,6 +11,7 @@ import 'package:ricj_and_morti/features/characters/domain/entities/character.dar
 import 'package:ricj_and_morti/features/characters/domain/entities/character_enums.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_bloc.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_event.dart';
+import 'package:ricj_and_morti/features/characters/presentation/bloc/theme/theme_cubit.dart';
 import 'package:ricj_and_morti/features/characters/presentation/pages/character_details_page.dart';
 import 'package:ricj_and_morti/features/characters/presentation/pages/favorites_page.dart';
 import 'package:ricj_and_morti/features/characters/presentation/widgets/character_card.dart';
@@ -78,10 +79,11 @@ class _CharacterListPageState extends State<CharacterListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider.value(
       value: _bloc,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: theme.scaffoldBackgroundColor,
 
         body: IndexedStack(
           index: _selectedIndex,
@@ -99,6 +101,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
   _buildCharacterList() {
     return BlocBuilder<CharacterBloc, PagingState<int, Character>>(
       builder: (context, state) {
+        final theme = Theme.of(context);
         final currentPagingState = PagingState<int, Character>(
           pages: state.pages,
           keys: state.keys,
@@ -110,9 +113,15 @@ class _CharacterListPageState extends State<CharacterListPage> {
           slivers: [
             // 1. Верхняя панель с кнопками (над заголовком)
             SliverAppBar(
-              backgroundColor: AppColors.background,
+              backgroundColor: theme.scaffoldBackgroundColor,
               floating: true,
               elevation: 0,
+              leadingWidth: 80,
+              leading: Padding(
+                padding: EdgeInsetsGeometry.only(top: 5, left: 8),
+
+                child: ThemeButton(),
+              ),
               actions: [
                 _ActionButton(
                   icon: _isSearching ? Icons.close : Icons.search,
@@ -136,7 +145,12 @@ class _CharacterListPageState extends State<CharacterListPage> {
                 padding: EdgeInsets.only(left: 16, bottom: 16, top: 8),
                 child: _isSearching
                     ? _buildSearchField()
-                    : Text('Characters', style: AppTextStyles.h1),
+                    : Text(
+                        'Characters',
+                        style: AppTextStyles.h1.copyWith(
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
               ),
             ),
 
@@ -237,10 +251,12 @@ class _CharacterListPageState extends State<CharacterListPage> {
                   onRetry: () =>
                       _bloc.add(const CharacterEvent.fetchCharacters()),
                 ),
-                noItemsFoundIndicatorBuilder: (_) => const Center(
+                noItemsFoundIndicatorBuilder: (_) => Center(
                   child: Text(
                     "No characters found",
-                    style: AppTextStyles.characterName,
+                    style: AppTextStyles.characterName.copyWith(
+                      color: theme.colorScheme.onSurface, // Адаптивный цвет
+                    ),
                   ),
                 ),
               ),
@@ -252,17 +268,20 @@ class _CharacterListPageState extends State<CharacterListPage> {
   }
 
   Widget _buildSearchField() {
+    final theme = Theme.of(context);
     return TextField(
       controller: _searchController,
       autofocus: true,
       onChanged: _onSearchChanged,
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(color: theme.colorScheme.onSurface),
       decoration: InputDecoration(
         hintText: 'Search characters...',
-        hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
-        prefixIcon: const Icon(Icons.search, color: AppColors.primary),
+        hintStyle: TextStyle(
+          color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+        ),
+        prefixIcon: Icon(Icons.search, color: theme.colorScheme.primary),
         filled: true,
-        fillColor: AppColors.surface,
+        fillColor: theme.cardColor,
         contentPadding: const EdgeInsets.symmetric(vertical: 0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -277,6 +296,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
     required T selectedItem,
     required Function(T) onSelected,
   }) {
+    final theme = Theme.of(context);
     return SizedBox(
       height: 50,
       child: ListView.builder(
@@ -289,15 +309,42 @@ class _CharacterListPageState extends State<CharacterListPage> {
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: ChoiceChip(
-              label: Text(item.name.toUpperCase()),
+              label: Text(
+                item.name.toUpperCase(),
+                style: TextStyle(
+                  color: isSelected
+                      ? Colors.black
+                      : theme.colorScheme.onSurface,
+                ),
+              ),
               selected: isSelected,
               onSelected: (_) => onSelected(item),
-              selectedColor: AppColors.primary,
-              backgroundColor: AppColors.surface,
+              selectedColor: theme.colorScheme.primary,
+              backgroundColor: theme.cardColor,
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class ThemeButton extends StatelessWidget {
+  const ThemeButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, state) {
+        final isDark =
+            state == ThemeMode.dark ||
+            (state == ThemeMode.system &&
+                MediaQuery.of(context).platformBrightness == Brightness.dark);
+        return _ActionButton(
+          icon: isDark ? Icons.wb_sunny : Icons.nightlight_round,
+          onTap: () => context.read<ThemeCubit>().toggleTheme(),
+        );
+      },
     );
   }
 }
@@ -311,14 +358,15 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(left: 12),
       decoration: BoxDecoration(
-        color: AppColors.surface.withValues(alpha: 0.5),
+        color: theme.cardColor.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: IconButton(
-        icon: Icon(icon, color: AppColors.textPrimary, size: 24),
+        icon: Icon(icon, color: theme.colorScheme.onSurface, size: 24),
         onPressed: onTap,
       ),
     );
@@ -333,14 +381,15 @@ class _CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
       height: 70,
       child: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: onTap,
-        backgroundColor: AppColors.surface,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.textSecondary,
+        backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
+        selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
+        unselectedItemColor: theme.bottomNavigationBarTheme.unselectedItemColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
@@ -365,16 +414,25 @@ class _ErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(message ?? "Something went wrong", style: AppTextStyles.label),
+          Text(
+            message ?? "Something went wrong",
+            style: AppTextStyles.label.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
           const SizedBox(height: 12),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: theme.colorScheme.primary,
+              foregroundColor: Colors.black,
+            ),
             onPressed: onRetry,
-            child: const Text("Retry", style: TextStyle(color: Colors.black)),
+            child: const Text("Retry"),
           ),
         ],
       ),
@@ -388,18 +446,19 @@ class _NewPageErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: onRetry,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            const Text(
+             Text(
               "Ошибка загрузки. Нажмите, чтобы повторить",
-              style: TextStyle(color: Colors.white70),
+              style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: 8),
-            const Icon(Icons.refresh, color: AppColors.primary),
+             Icon(Icons.refresh, color: theme.colorScheme.primary),
           ],
         ),
       ),
