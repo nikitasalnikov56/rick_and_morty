@@ -12,71 +12,63 @@ part of 'character_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CharacterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)
+        fetchCharacters,
     required TResult Function(int id, void Function(String)? onComplete)
-    toggleFavorite,
-  }) => throw _privateConstructorUsedError;
+        toggleFavorite,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )?
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)?
+        fetchCharacters,
     TResult? Function(int id, void Function(String)? onComplete)?
-    toggleFavorite,
-  }) => throw _privateConstructorUsedError;
+        toggleFavorite,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )?
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)?
+        fetchCharacters,
     TResult Function(int id, void Function(String)? onComplete)? toggleFavorite,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(FetchCharacters value) fetchCharacters,
     required TResult Function(ToggleFavorite value) toggleFavorite,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchCharacters value)? fetchCharacters,
     TResult? Function(ToggleFavorite value)? toggleFavorite,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchCharacters value)? fetchCharacters,
     TResult Function(ToggleFavorite value)? toggleFavorite,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CharacterEventCopyWith<$Res> {
   factory $CharacterEventCopyWith(
-    CharacterEvent value,
-    $Res Function(CharacterEvent) then,
-  ) = _$CharacterEventCopyWithImpl<$Res, CharacterEvent>;
+          CharacterEvent value, $Res Function(CharacterEvent) then) =
+      _$CharacterEventCopyWithImpl<$Res, CharacterEvent>;
 }
 
 /// @nodoc
@@ -95,10 +87,9 @@ class _$CharacterEventCopyWithImpl<$Res, $Val extends CharacterEvent>
 
 /// @nodoc
 abstract class _$$FetchCharactersImplCopyWith<$Res> {
-  factory _$$FetchCharactersImplCopyWith(
-    _$FetchCharactersImpl value,
-    $Res Function(_$FetchCharactersImpl) then,
-  ) = __$$FetchCharactersImplCopyWithImpl<$Res>;
+  factory _$$FetchCharactersImplCopyWith(_$FetchCharactersImpl value,
+          $Res Function(_$FetchCharactersImpl) then) =
+      __$$FetchCharactersImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool isRefresh, String? name, String? status, String? gender});
 }
@@ -108,9 +99,8 @@ class __$$FetchCharactersImplCopyWithImpl<$Res>
     extends _$CharacterEventCopyWithImpl<$Res, _$FetchCharactersImpl>
     implements _$$FetchCharactersImplCopyWith<$Res> {
   __$$FetchCharactersImplCopyWithImpl(
-    _$FetchCharactersImpl _value,
-    $Res Function(_$FetchCharactersImpl) _then,
-  ) : super(_value, _then);
+      _$FetchCharactersImpl _value, $Res Function(_$FetchCharactersImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CharacterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -122,38 +112,32 @@ class __$$FetchCharactersImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? gender = freezed,
   }) {
-    return _then(
-      _$FetchCharactersImpl(
-        isRefresh: null == isRefresh
-            ? _value.isRefresh
-            : isRefresh // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        name: freezed == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        status: freezed == status
-            ? _value.status
-            : status // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        gender: freezed == gender
-            ? _value.gender
-            : gender // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
+    return _then(_$FetchCharactersImpl(
+      isRefresh: null == isRefresh
+          ? _value.isRefresh
+          : isRefresh // ignore: cast_nullable_to_non_nullable
+              as bool,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$FetchCharactersImpl implements FetchCharacters {
-  const _$FetchCharactersImpl({
-    this.isRefresh = false,
-    this.name,
-    this.status,
-    this.gender,
-  });
+  const _$FetchCharactersImpl(
+      {this.isRefresh = false, this.name, this.status, this.gender});
 
   @override
   @JsonKey()
@@ -192,22 +176,16 @@ class _$FetchCharactersImpl implements FetchCharacters {
   @pragma('vm:prefer-inline')
   _$$FetchCharactersImplCopyWith<_$FetchCharactersImpl> get copyWith =>
       __$$FetchCharactersImplCopyWithImpl<_$FetchCharactersImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)
+        fetchCharacters,
     required TResult Function(int id, void Function(String)? onComplete)
-    toggleFavorite,
+        toggleFavorite,
   }) {
     return fetchCharacters(isRefresh, name, status, gender);
   }
@@ -216,14 +194,10 @@ class _$FetchCharactersImpl implements FetchCharacters {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )?
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)?
+        fetchCharacters,
     TResult? Function(int id, void Function(String)? onComplete)?
-    toggleFavorite,
+        toggleFavorite,
   }) {
     return fetchCharacters?.call(isRefresh, name, status, gender);
   }
@@ -232,12 +206,8 @@ class _$FetchCharactersImpl implements FetchCharacters {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )?
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)?
+        fetchCharacters,
     TResult Function(int id, void Function(String)? onComplete)? toggleFavorite,
     required TResult orElse(),
   }) {
@@ -280,12 +250,11 @@ class _$FetchCharactersImpl implements FetchCharacters {
 }
 
 abstract class FetchCharacters implements CharacterEvent {
-  const factory FetchCharacters({
-    final bool isRefresh,
-    final String? name,
-    final String? status,
-    final String? gender,
-  }) = _$FetchCharactersImpl;
+  const factory FetchCharacters(
+      {final bool isRefresh,
+      final String? name,
+      final String? status,
+      final String? gender}) = _$FetchCharactersImpl;
 
   bool get isRefresh;
   String? get name;
@@ -301,10 +270,9 @@ abstract class FetchCharacters implements CharacterEvent {
 
 /// @nodoc
 abstract class _$$ToggleFavoriteImplCopyWith<$Res> {
-  factory _$$ToggleFavoriteImplCopyWith(
-    _$ToggleFavoriteImpl value,
-    $Res Function(_$ToggleFavoriteImpl) then,
-  ) = __$$ToggleFavoriteImplCopyWithImpl<$Res>;
+  factory _$$ToggleFavoriteImplCopyWith(_$ToggleFavoriteImpl value,
+          $Res Function(_$ToggleFavoriteImpl) then) =
+      __$$ToggleFavoriteImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int id, void Function(String)? onComplete});
 }
@@ -314,27 +282,27 @@ class __$$ToggleFavoriteImplCopyWithImpl<$Res>
     extends _$CharacterEventCopyWithImpl<$Res, _$ToggleFavoriteImpl>
     implements _$$ToggleFavoriteImplCopyWith<$Res> {
   __$$ToggleFavoriteImplCopyWithImpl(
-    _$ToggleFavoriteImpl _value,
-    $Res Function(_$ToggleFavoriteImpl) _then,
-  ) : super(_value, _then);
+      _$ToggleFavoriteImpl _value, $Res Function(_$ToggleFavoriteImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CharacterEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null, Object? onComplete = freezed}) {
-    return _then(
-      _$ToggleFavoriteImpl(
-        null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as int,
-        onComplete: freezed == onComplete
-            ? _value.onComplete
-            : onComplete // ignore: cast_nullable_to_non_nullable
-                  as void Function(String)?,
-      ),
-    );
+  $Res call({
+    Object? id = null,
+    Object? onComplete = freezed,
+  }) {
+    return _then(_$ToggleFavoriteImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      onComplete: freezed == onComplete
+          ? _value.onComplete
+          : onComplete // ignore: cast_nullable_to_non_nullable
+              as void Function(String)?,
+    ));
   }
 }
 
@@ -373,22 +341,16 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
   @pragma('vm:prefer-inline')
   _$$ToggleFavoriteImplCopyWith<_$ToggleFavoriteImpl> get copyWith =>
       __$$ToggleFavoriteImplCopyWithImpl<_$ToggleFavoriteImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)
+        fetchCharacters,
     required TResult Function(int id, void Function(String)? onComplete)
-    toggleFavorite,
+        toggleFavorite,
   }) {
     return toggleFavorite(id, onComplete);
   }
@@ -397,14 +359,10 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )?
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)?
+        fetchCharacters,
     TResult? Function(int id, void Function(String)? onComplete)?
-    toggleFavorite,
+        toggleFavorite,
   }) {
     return toggleFavorite?.call(id, onComplete);
   }
@@ -413,12 +371,8 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-      bool isRefresh,
-      String? name,
-      String? status,
-      String? gender,
-    )?
-    fetchCharacters,
+            bool isRefresh, String? name, String? status, String? gender)?
+        fetchCharacters,
     TResult Function(int id, void Function(String)? onComplete)? toggleFavorite,
     required TResult orElse(),
   }) {
@@ -461,10 +415,8 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
 }
 
 abstract class ToggleFavorite implements CharacterEvent {
-  const factory ToggleFavorite(
-    final int id, {
-    final void Function(String)? onComplete,
-  }) = _$ToggleFavoriteImpl;
+  const factory ToggleFavorite(final int id,
+      {final void Function(String)? onComplete}) = _$ToggleFavoriteImpl;
 
   int get id;
   void Function(String)? get onComplete;

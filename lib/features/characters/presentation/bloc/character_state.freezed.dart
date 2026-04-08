@@ -12,8 +12,7 @@ part of 'character_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CharacterState {
@@ -22,16 +21,18 @@ mixin _$CharacterState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Character> characters, bool hasReachedMax)
-    loaded,
+        loaded,
     required TResult Function(String message) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Character> characters, bool hasReachedMax)? loaded,
     TResult? Function(String message)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -39,21 +40,24 @@ mixin _$CharacterState {
     TResult Function(List<Character> characters, bool hasReachedMax)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -61,15 +65,15 @@ mixin _$CharacterState {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CharacterStateCopyWith<$Res> {
   factory $CharacterStateCopyWith(
-    CharacterState value,
-    $Res Function(CharacterState) then,
-  ) = _$CharacterStateCopyWithImpl<$Res, CharacterState>;
+          CharacterState value, $Res Function(CharacterState) then) =
+      _$CharacterStateCopyWithImpl<$Res, CharacterState>;
 }
 
 /// @nodoc
@@ -89,9 +93,8 @@ class _$CharacterStateCopyWithImpl<$Res, $Val extends CharacterState>
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -99,9 +102,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     extends _$CharacterStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
-  ) : super(_value, _then);
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CharacterState
   /// with the given fields replaced by the non-null parameter values.
@@ -132,7 +134,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Character> characters, bool hasReachedMax)
-    loaded,
+        loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -209,9 +211,8 @@ abstract class _Initial implements CharacterState {
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -219,9 +220,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
     extends _$CharacterStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
-  ) : super(_value, _then);
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CharacterState
   /// with the given fields replaced by the non-null parameter values.
@@ -252,7 +252,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Character> characters, bool hasReachedMax)
-    loaded,
+        loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -329,9 +329,8 @@ abstract class _Loading implements CharacterState {
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
-    _$LoadedImpl value,
-    $Res Function(_$LoadedImpl) then,
-  ) = __$$LoadedImplCopyWithImpl<$Res>;
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Character> characters, bool hasReachedMax});
 }
@@ -341,37 +340,36 @@ class __$$LoadedImplCopyWithImpl<$Res>
     extends _$CharacterStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl _value,
-    $Res Function(_$LoadedImpl) _then,
-  ) : super(_value, _then);
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CharacterState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? characters = null, Object? hasReachedMax = null}) {
-    return _then(
-      _$LoadedImpl(
-        characters: null == characters
-            ? _value._characters
-            : characters // ignore: cast_nullable_to_non_nullable
-                  as List<Character>,
-        hasReachedMax: null == hasReachedMax
-            ? _value.hasReachedMax
-            : hasReachedMax // ignore: cast_nullable_to_non_nullable
-                  as bool,
-      ),
-    );
+  $Res call({
+    Object? characters = null,
+    Object? hasReachedMax = null,
+  }) {
+    return _then(_$LoadedImpl(
+      characters: null == characters
+          ? _value._characters
+          : characters // ignore: cast_nullable_to_non_nullable
+              as List<Character>,
+      hasReachedMax: null == hasReachedMax
+          ? _value.hasReachedMax
+          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({
-    required final List<Character> characters,
-    required this.hasReachedMax,
-  }) : _characters = characters;
+  const _$LoadedImpl(
+      {required final List<Character> characters, required this.hasReachedMax})
+      : _characters = characters;
 
   final List<Character> _characters;
   @override
@@ -394,20 +392,15 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            const DeepCollectionEquality().equals(
-              other._characters,
-              _characters,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._characters, _characters) &&
             (identical(other.hasReachedMax, hasReachedMax) ||
                 other.hasReachedMax == hasReachedMax));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_characters),
-    hasReachedMax,
-  );
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_characters), hasReachedMax);
 
   /// Create a copy of CharacterState
   /// with the given fields replaced by the non-null parameter values.
@@ -423,7 +416,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Character> characters, bool hasReachedMax)
-    loaded,
+        loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(characters, hasReachedMax);
@@ -494,10 +487,9 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements CharacterState {
-  const factory _Loaded({
-    required final List<Character> characters,
-    required final bool hasReachedMax,
-  }) = _$LoadedImpl;
+  const factory _Loaded(
+      {required final List<Character> characters,
+      required final bool hasReachedMax}) = _$LoadedImpl;
 
   List<Character> get characters;
   bool get hasReachedMax;
@@ -512,9 +504,8 @@ abstract class _Loaded implements CharacterState {
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -524,23 +515,22 @@ class __$$ErrorImplCopyWithImpl<$Res>
     extends _$CharacterStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
-  ) : super(_value, _then);
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CharacterState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
-    return _then(
-      _$ErrorImpl(
-        null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -582,7 +572,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Character> characters, bool hasReachedMax)
-    loaded,
+        loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);

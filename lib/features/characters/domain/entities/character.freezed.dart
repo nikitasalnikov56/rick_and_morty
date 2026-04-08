@@ -12,8 +12,7 @@ part of 'character.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Character _$CharacterFromJson(Map<String, dynamic> json) {
   return _Character.fromJson(json);
@@ -53,16 +52,15 @@ abstract class $CharacterCopyWith<$Res> {
   factory $CharacterCopyWith(Character value, $Res Function(Character) then) =
       _$CharacterCopyWithImpl<$Res, Character>;
   @useResult
-  $Res call({
-    @HiveField(0) int id,
-    @HiveField(1) String name,
-    @HiveField(2) String status,
-    @HiveField(3) String species,
-    @HiveField(4) String location,
-    @HiveField(5) String imageUrl,
-    @HiveField(6) bool isFavorite,
-    @HiveField(7) String gender,
-  });
+  $Res call(
+      {@HiveField(0) int id,
+      @HiveField(1) String name,
+      @HiveField(2) String status,
+      @HiveField(3) String species,
+      @HiveField(4) String location,
+      @HiveField(5) String imageUrl,
+      @HiveField(6) bool isFavorite,
+      @HiveField(7) String gender});
 }
 
 /// @nodoc
@@ -89,43 +87,40 @@ class _$CharacterCopyWithImpl<$Res, $Val extends Character>
     Object? isFavorite = null,
     Object? gender = null,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as int,
-            name: null == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                      as String,
-            status: null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
-                      as String,
-            species: null == species
-                ? _value.species
-                : species // ignore: cast_nullable_to_non_nullable
-                      as String,
-            location: null == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String,
-            imageUrl: null == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isFavorite: null == isFavorite
-                ? _value.isFavorite
-                : isFavorite // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            gender: null == gender
-                ? _value.gender
-                : gender // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
@@ -133,21 +128,19 @@ class _$CharacterCopyWithImpl<$Res, $Val extends Character>
 abstract class _$$CharacterImplCopyWith<$Res>
     implements $CharacterCopyWith<$Res> {
   factory _$$CharacterImplCopyWith(
-    _$CharacterImpl value,
-    $Res Function(_$CharacterImpl) then,
-  ) = __$$CharacterImplCopyWithImpl<$Res>;
+          _$CharacterImpl value, $Res Function(_$CharacterImpl) then) =
+      __$$CharacterImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    @HiveField(0) int id,
-    @HiveField(1) String name,
-    @HiveField(2) String status,
-    @HiveField(3) String species,
-    @HiveField(4) String location,
-    @HiveField(5) String imageUrl,
-    @HiveField(6) bool isFavorite,
-    @HiveField(7) String gender,
-  });
+  $Res call(
+      {@HiveField(0) int id,
+      @HiveField(1) String name,
+      @HiveField(2) String status,
+      @HiveField(3) String species,
+      @HiveField(4) String location,
+      @HiveField(5) String imageUrl,
+      @HiveField(6) bool isFavorite,
+      @HiveField(7) String gender});
 }
 
 /// @nodoc
@@ -155,9 +148,8 @@ class __$$CharacterImplCopyWithImpl<$Res>
     extends _$CharacterCopyWithImpl<$Res, _$CharacterImpl>
     implements _$$CharacterImplCopyWith<$Res> {
   __$$CharacterImplCopyWithImpl(
-    _$CharacterImpl _value,
-    $Res Function(_$CharacterImpl) _then,
-  ) : super(_value, _then);
+      _$CharacterImpl _value, $Res Function(_$CharacterImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of Character
   /// with the given fields replaced by the non-null parameter values.
@@ -173,58 +165,55 @@ class __$$CharacterImplCopyWithImpl<$Res>
     Object? isFavorite = null,
     Object? gender = null,
   }) {
-    return _then(
-      _$CharacterImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as int,
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                  as String,
-        status: null == status
-            ? _value.status
-            : status // ignore: cast_nullable_to_non_nullable
-                  as String,
-        species: null == species
-            ? _value.species
-            : species // ignore: cast_nullable_to_non_nullable
-                  as String,
-        location: null == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
-                  as String,
-        imageUrl: null == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String,
-        isFavorite: null == isFavorite
-            ? _value.isFavorite
-            : isFavorite // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        gender: null == gender
-            ? _value.gender
-            : gender // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
+    return _then(_$CharacterImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CharacterImpl implements _Character {
-  const _$CharacterImpl({
-    @HiveField(0) required this.id,
-    @HiveField(1) required this.name,
-    @HiveField(2) required this.status,
-    @HiveField(3) required this.species,
-    @HiveField(4) required this.location,
-    @HiveField(5) required this.imageUrl,
-    @HiveField(6) this.isFavorite = false,
-    @HiveField(7) this.gender = 'Unknown',
-  });
+  const _$CharacterImpl(
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) required this.status,
+      @HiveField(3) required this.species,
+      @HiveField(4) required this.location,
+      @HiveField(5) required this.imageUrl,
+      @HiveField(6) this.isFavorite = false,
+      @HiveField(7) this.gender = 'Unknown'});
 
   factory _$CharacterImpl.fromJson(Map<String, dynamic> json) =>
       _$$CharacterImplFromJson(json);
@@ -281,17 +270,8 @@ class _$CharacterImpl implements _Character {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    name,
-    status,
-    species,
-    location,
-    imageUrl,
-    isFavorite,
-    gender,
-  );
+  int get hashCode => Object.hash(runtimeType, id, name, status, species,
+      location, imageUrl, isFavorite, gender);
 
   /// Create a copy of Character
   /// with the given fields replaced by the non-null parameter values.
@@ -303,21 +283,22 @@ class _$CharacterImpl implements _Character {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CharacterImplToJson(this);
+    return _$$CharacterImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _Character implements Character {
-  const factory _Character({
-    @HiveField(0) required final int id,
-    @HiveField(1) required final String name,
-    @HiveField(2) required final String status,
-    @HiveField(3) required final String species,
-    @HiveField(4) required final String location,
-    @HiveField(5) required final String imageUrl,
-    @HiveField(6) final bool isFavorite,
-    @HiveField(7) final String gender,
-  }) = _$CharacterImpl;
+  const factory _Character(
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String name,
+      @HiveField(2) required final String status,
+      @HiveField(3) required final String species,
+      @HiveField(4) required final String location,
+      @HiveField(5) required final String imageUrl,
+      @HiveField(6) final bool isFavorite,
+      @HiveField(7) final String gender}) = _$CharacterImpl;
 
   factory _Character.fromJson(Map<String, dynamic> json) =
       _$CharacterImpl.fromJson;

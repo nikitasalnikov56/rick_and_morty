@@ -15,7 +15,10 @@ CharacterResponse _$CharacterResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$CharacterResponseToJson(CharacterResponse instance) =>
-    <String, dynamic>{'info': instance.info, 'results': instance.results};
+    <String, dynamic>{
+      'info': instance.info,
+      'results': instance.results,
+    };
 
 CharacterInfo _$CharacterInfoFromJson(Map<String, dynamic> json) =>
     CharacterInfo(
@@ -41,9 +44,8 @@ CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
       species: json['species'] as String,
       gender: json['gender'] as String,
       image: json['image'] as String,
-      location: LocationModel.fromJson(
-        json['location'] as Map<String, dynamic>,
-      ),
+      location:
+          LocationModel.fromJson(json['location'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
@@ -58,7 +60,11 @@ Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
     };
 
 LocationModel _$LocationModelFromJson(Map<String, dynamic> json) =>
-    LocationModel(name: json['name'] as String);
+    LocationModel(
+      name: json['name'] as String,
+    );
 
 Map<String, dynamic> _$LocationModelToJson(LocationModel instance) =>
-    <String, dynamic>{'name': instance.name};
+    <String, dynamic>{
+      'name': instance.name,
+    };
