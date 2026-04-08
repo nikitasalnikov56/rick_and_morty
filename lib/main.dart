@@ -6,7 +6,7 @@ import 'package:ricj_and_morti/features/characters/domain/entities/character.dar
 import 'package:ricj_and_morti/features/characters/presentation/bloc/theme/theme_cubit.dart';
 import 'package:ricj_and_morti/features/characters/presentation/pages/character_list_page.dart';
 import 'core/di/service_locator.dart';
-import 'core/theme/app_colors.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

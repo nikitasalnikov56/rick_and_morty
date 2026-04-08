@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ricj_and_morti/core/di/service_locator.dart';
-import 'package:ricj_and_morti/core/theme/app_colors.dart';
 import 'package:ricj_and_morti/core/theme/app_text_styles.dart';
 import 'package:ricj_and_morti/core/utils/app_toaster.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character.dart';

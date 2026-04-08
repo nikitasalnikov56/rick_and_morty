@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ricj_and_morti/core/theme/app_colors.dart';
+
 import 'package:ricj_and_morti/core/theme/app_text_styles.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_bloc.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_event.dart';
