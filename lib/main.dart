@@ -14,6 +14,7 @@ void main() async {
   }
 
   await Hive.openBox<Character>('characters_box');
+ 
   setupLocator();
 
   runApp(const RickAndMortyApp());

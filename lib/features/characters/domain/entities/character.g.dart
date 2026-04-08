@@ -24,13 +24,14 @@ class CharacterAdapter extends TypeAdapter<Character> {
       location: fields[4] as String,
       imageUrl: fields[5] as String,
       isFavorite: fields[6] == null ? false : fields[6] as bool,
+      gender: fields[7] == null ? 'Unknown' : fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Character obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class CharacterAdapter extends TypeAdapter<Character> {
       ..writeByte(5)
       ..write(obj.imageUrl)
       ..writeByte(6)
-      ..write(obj.isFavorite);
+      ..write(obj.isFavorite)
+      ..writeByte(7)
+      ..write(obj.gender);
   }
 
   @override
@@ -71,6 +74,7 @@ _$CharacterImpl _$$CharacterImplFromJson(Map<String, dynamic> json) =>
       location: json['location'] as String,
       imageUrl: json['imageUrl'] as String,
       isFavorite: json['isFavorite'] as bool? ?? false,
+      gender: json['gender'] as String? ?? 'Unknown',
     );
 
 Map<String, dynamic> _$$CharacterImplToJson(_$CharacterImpl instance) =>
@@ -82,4 +86,5 @@ Map<String, dynamic> _$$CharacterImplToJson(_$CharacterImpl instance) =>
       'location': instance.location,
       'imageUrl': instance.imageUrl,
       'isFavorite': instance.isFavorite,
+      'gender': instance.gender,
     };

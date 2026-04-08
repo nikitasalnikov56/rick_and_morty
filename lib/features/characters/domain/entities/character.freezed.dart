@@ -35,6 +35,8 @@ mixin _$Character {
   String get imageUrl => throw _privateConstructorUsedError;
   @HiveField(6)
   bool get isFavorite => throw _privateConstructorUsedError;
+  @HiveField(7)
+  String get gender => throw _privateConstructorUsedError;
 
   /// Serializes this Character to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -59,6 +61,7 @@ abstract class $CharacterCopyWith<$Res> {
     @HiveField(4) String location,
     @HiveField(5) String imageUrl,
     @HiveField(6) bool isFavorite,
+    @HiveField(7) String gender,
   });
 }
 
@@ -84,6 +87,7 @@ class _$CharacterCopyWithImpl<$Res, $Val extends Character>
     Object? location = null,
     Object? imageUrl = null,
     Object? isFavorite = null,
+    Object? gender = null,
   }) {
     return _then(
       _value.copyWith(
@@ -115,6 +119,10 @@ class _$CharacterCopyWithImpl<$Res, $Val extends Character>
                 ? _value.isFavorite
                 : isFavorite // ignore: cast_nullable_to_non_nullable
                       as bool,
+            gender: null == gender
+                ? _value.gender
+                : gender // ignore: cast_nullable_to_non_nullable
+                      as String,
           )
           as $Val,
     );
@@ -138,6 +146,7 @@ abstract class _$$CharacterImplCopyWith<$Res>
     @HiveField(4) String location,
     @HiveField(5) String imageUrl,
     @HiveField(6) bool isFavorite,
+    @HiveField(7) String gender,
   });
 }
 
@@ -162,6 +171,7 @@ class __$$CharacterImplCopyWithImpl<$Res>
     Object? location = null,
     Object? imageUrl = null,
     Object? isFavorite = null,
+    Object? gender = null,
   }) {
     return _then(
       _$CharacterImpl(
@@ -193,6 +203,10 @@ class __$$CharacterImplCopyWithImpl<$Res>
             ? _value.isFavorite
             : isFavorite // ignore: cast_nullable_to_non_nullable
                   as bool,
+        gender: null == gender
+            ? _value.gender
+            : gender // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
   }
@@ -209,6 +223,7 @@ class _$CharacterImpl implements _Character {
     @HiveField(4) required this.location,
     @HiveField(5) required this.imageUrl,
     @HiveField(6) this.isFavorite = false,
+    @HiveField(7) this.gender = 'Unknown',
   });
 
   factory _$CharacterImpl.fromJson(Map<String, dynamic> json) =>
@@ -236,10 +251,14 @@ class _$CharacterImpl implements _Character {
   @JsonKey()
   @HiveField(6)
   final bool isFavorite;
+  @override
+  @JsonKey()
+  @HiveField(7)
+  final String gender;
 
   @override
   String toString() {
-    return 'Character(id: $id, name: $name, status: $status, species: $species, location: $location, imageUrl: $imageUrl, isFavorite: $isFavorite)';
+    return 'Character(id: $id, name: $name, status: $status, species: $species, location: $location, imageUrl: $imageUrl, isFavorite: $isFavorite, gender: $gender)';
   }
 
   @override
@@ -256,7 +275,8 @@ class _$CharacterImpl implements _Character {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite));
+                other.isFavorite == isFavorite) &&
+            (identical(other.gender, gender) || other.gender == gender));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -270,6 +290,7 @@ class _$CharacterImpl implements _Character {
     location,
     imageUrl,
     isFavorite,
+    gender,
   );
 
   /// Create a copy of Character
@@ -295,6 +316,7 @@ abstract class _Character implements Character {
     @HiveField(4) required final String location,
     @HiveField(5) required final String imageUrl,
     @HiveField(6) final bool isFavorite,
+    @HiveField(7) final String gender,
   }) = _$CharacterImpl;
 
   factory _Character.fromJson(Map<String, dynamic> json) =
@@ -321,6 +343,9 @@ abstract class _Character implements Character {
   @override
   @HiveField(6)
   bool get isFavorite;
+  @override
+  @HiveField(7)
+  String get gender;
 
   /// Create a copy of Character
   /// with the given fields replaced by the non-null parameter values.

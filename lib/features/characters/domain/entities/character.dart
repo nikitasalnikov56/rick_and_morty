@@ -16,6 +16,7 @@ class Character with _$Character {
     @HiveField(4) required String location,
     @HiveField(5) required String imageUrl,
     @HiveField(6) @Default(false) bool isFavorite,
+    @HiveField(7) @Default('Unknown')  String gender,
   }) = _Character;
 
   factory Character.fromJson(Map<String, dynamic> json) =>

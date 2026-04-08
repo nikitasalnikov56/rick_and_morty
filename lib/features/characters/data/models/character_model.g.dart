@@ -39,6 +39,7 @@ CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       status: json['status'] as String,
       species: json['species'] as String,
+      gender: json['gender'] as String,
       image: json['image'] as String,
       location: LocationModel.fromJson(
         json['location'] as Map<String, dynamic>,
@@ -51,6 +52,7 @@ Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
       'name': instance.name,
       'status': instance.status,
       'species': instance.species,
+      'gender': instance.gender,
       'image': instance.image,
       'location': instance.location,
     };

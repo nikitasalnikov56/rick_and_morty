@@ -2,17 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ricj_and_morti/core/theme/app_colors.dart';
 import 'package:ricj_and_morti/core/theme/app_text_styles.dart';
+import 'package:ricj_and_morti/core/utils/hero_shape_clipper.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
   final VoidCallback? onFavoriteTap;
 
-  const CharacterCard({
-    super.key,
-    required this.character,
-     this.onFavoriteTap,
-  });
+  const CharacterCard({super.key, required this.character, this.onFavoriteTap});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +20,15 @@ class CharacterCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _CharacterImage(imageUrl: character.imageUrl),
+              _CharacterImage(
+                imageUrl: character.imageUrl,
+                characterId: character.id,
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -81,16 +81,29 @@ class CharacterCard extends StatelessWidget {
           ),
           IconButton(
             padding: const EdgeInsets.only(top: 8, right: 8),
-            icon: Icon(
-              character.isFavorite ? Icons.star : Icons.star_border,
-              size: 28,
-              color: 
-            character.isFavorite
-                ? AppColors.primary
-                : AppColors.textSecondary,
+            icon: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: character.isFavorite
+                    ? AppColors.primary.withValues(alpha: 0.1)
+                    : Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: AnimatedScale(
+                scale: character.isFavorite ? 1.2 : 1.0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.elasticInOut,
+                child: Icon(
+                  character.isFavorite ? Icons.star : Icons.star_border,
+                  size: 28,
+                  color: character.isFavorite
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
+                ),
+              ),
             ),
-            color: 
-            character.isFavorite
+            color: character.isFavorite
                 ? AppColors.primary
                 : AppColors.textSecondary,
             onPressed: onFavoriteTap,
@@ -129,7 +142,8 @@ class _StatusIndicator extends StatelessWidget {
 
 class _CharacterImage extends StatelessWidget {
   final String imageUrl;
-  const _CharacterImage({required this.imageUrl});
+  final int characterId;
+  const _CharacterImage({required this.imageUrl, required this.characterId});
 
   @override
   Widget build(BuildContext context) {
@@ -141,20 +155,36 @@ class _CharacterImage extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(2),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          child: CachedNetworkImage(
-            imageUrl: imageUrl,
-            width: 120,
-            height: 120,
-            fit: BoxFit.cover,
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => Image.asset(
-              'assets/images/no_image.jpg', 
+        child: Hero(
+          tag: 'character_image_$characterId',
+          // flightShuttleBuilder управляет видом виджета В ПОЛЕТЕ
+          flightShuttleBuilder:
+              (context, animation, direction, fromContext, toContext) {
+                return AnimatedBuilder(
+                  animation: animation,
+                  builder: (context, child) {
+                    return ClipPath(
+                      clipper: HeroShapeClipper(animation.value),
+                      child: toContext.widget,
+                    );
+                  },
+                );
+              },
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
               width: 120,
               height: 120,
               fit: BoxFit.cover,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Image.asset(
+                'assets/images/no_image.jpg',
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

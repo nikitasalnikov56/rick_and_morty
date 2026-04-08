@@ -6,12 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ricj_and_morti/core/di/service_locator.dart';
 import 'package:ricj_and_morti/core/theme/app_colors.dart';
 import 'package:ricj_and_morti/core/theme/app_text_styles.dart';
+import 'package:ricj_and_morti/core/utils/app_toaster.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character.dart';
 import 'package:ricj_and_morti/features/characters/domain/entities/character_enums.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_bloc.dart';
 import 'package:ricj_and_morti/features/characters/presentation/bloc/character_event.dart';
+import 'package:ricj_and_morti/features/characters/presentation/pages/character_details_page.dart';
 import 'package:ricj_and_morti/features/characters/presentation/pages/favorites_page.dart';
 import 'package:ricj_and_morti/features/characters/presentation/widgets/character_card.dart';
+import 'package:ricj_and_morti/features/characters/presentation/widgets/character_card_shimmer.dart';
 
 class CharacterListPage extends StatefulWidget {
   const CharacterListPage({super.key});
@@ -121,7 +124,6 @@ class _CharacterListPageState extends State<CharacterListPage> {
                     onTap: () {
                       setState(() {
                         _showFilters = !_showFilters;
-                        print(_showFilters);
                       });
                     },
                   ),
@@ -138,49 +140,48 @@ class _CharacterListPageState extends State<CharacterListPage> {
               ),
             ),
 
-        
-              SliverToBoxAdapter(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
+            SliverToBoxAdapter(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
 
-                  height: _showFilters ? 110 : 0,
-                  child: _showFilters
-                      ? SingleChildScrollView(
+                height: _showFilters ? 110 : 0,
+                child: _showFilters
+                    ? SingleChildScrollView(
                         physics: NeverScrollableScrollPhysics(),
                         child: Column(
-                            children: [
-                              // Строка статусов
-                              _buildFilterRow(
-                                items: CharacterStatus.values,
-                                selectedItem: _selectedStatus,
-                                onSelected: (val) {
-                                  setState(() => _selectedStatus = val);
-                                  _bloc.add(
-                                    CharacterEvent.fetchCharacters(
-                                      status: val.value,
-                                    ),
-                                  );
-                                },
-                              ),
-                              // Строка гендера
-                              _buildFilterRow(
-                                items: CharacterGender.values,
-                                selectedItem: _selectedGender,
-                                onSelected: (val) {
-                                  setState(() => _selectedGender = val);
-                                  _bloc.add(
-                                    CharacterEvent.fetchCharacters(
-                                      gender: val.value,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                          children: [
+                            // Строка статусов
+                            _buildFilterRow(
+                              items: CharacterStatus.values,
+                              selectedItem: _selectedStatus,
+                              onSelected: (val) {
+                                setState(() => _selectedStatus = val);
+                                _bloc.add(
+                                  CharacterEvent.fetchCharacters(
+                                    status: val.value,
+                                  ),
+                                );
+                              },
+                            ),
+                            // Строка гендера
+                            _buildFilterRow(
+                              items: CharacterGender.values,
+                              selectedItem: _selectedGender,
+                              onSelected: (val) {
+                                setState(() => _selectedGender = val);
+                                _bloc.add(
+                                  CharacterEvent.fetchCharacters(
+                                    gender: val.value,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       )
-                      : const SizedBox.shrink(),
-                ),
+                    : const SizedBox.shrink(),
               ),
+            ),
 
             // 3. Список персонажей
             PagedSliverList<int, Character>(
@@ -195,14 +196,38 @@ class _CharacterListPageState extends State<CharacterListPage> {
               fetchNextPage: () =>
                   _bloc.add(const CharacterEvent.fetchCharacters()),
               builderDelegate: PagedChildBuilderDelegate<Character>(
-                itemBuilder: (context, item, index) => CharacterCard(
-                  character: item,
-                  onFavoriteTap: () {
-                    if (!item.isFavorite) {
-                      _bloc.add(CharacterEvent.toggleFavorite(item.id));
-                    }
+                itemBuilder: (context, item, index) => GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            CharacterDetailsPage(character: item),
+                      ),
+                    );
                   },
+                  child: CharacterCard(
+                    character: item,
+                    onFavoriteTap: () {
+                      if (!item.isFavorite) {
+                        _bloc.add(
+                          CharacterEvent.toggleFavorite(
+                            item.id,
+                            onComplete: (message) {
+                              AppToaster.show(
+                                context: context,
+                                message: message,
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
+                firstPageProgressIndicatorBuilder: (context) => Column(
+                  children: List.generate(5, (_) => CharacterCardShimmer()),
+                ),
+                newPageProgressIndicatorBuilder: (_) => CharacterCardShimmer(),
                 firstPageErrorIndicatorBuilder: (_) => _ErrorWidget(
                   message: state.error.toString(),
                   onRetry: () =>
@@ -246,7 +271,6 @@ class _CharacterListPageState extends State<CharacterListPage> {
       ),
     );
   }
-
 
   Widget _buildFilterRow<T extends Enum>({
     required List<T> items,

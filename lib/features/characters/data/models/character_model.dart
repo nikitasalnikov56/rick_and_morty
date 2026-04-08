@@ -34,6 +34,7 @@ class CharacterModel {
   final String name;
   final String status;
   final String species;
+  final String gender;
   final String image;
   final LocationModel location;
 
@@ -42,6 +43,7 @@ class CharacterModel {
     required this.name,
     required this.status,
     required this.species,
+    required this.gender,
     required this.image,
     required this.location,
   });
@@ -57,6 +59,7 @@ class CharacterModel {
       imageUrl: image,
       status: status,
       species: species,
+      gender: gender ,
       location: location.name,
       isFavorite: false,
     );

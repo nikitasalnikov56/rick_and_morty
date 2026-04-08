@@ -26,7 +26,8 @@ mixin _$CharacterEvent {
       String? gender,
     )
     fetchCharacters,
-    required TResult Function(int id) toggleFavorite,
+    required TResult Function(int id, void Function(String)? onComplete)
+    toggleFavorite,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -37,7 +38,8 @@ mixin _$CharacterEvent {
       String? gender,
     )?
     fetchCharacters,
-    TResult? Function(int id)? toggleFavorite,
+    TResult? Function(int id, void Function(String)? onComplete)?
+    toggleFavorite,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -48,7 +50,7 @@ mixin _$CharacterEvent {
       String? gender,
     )?
     fetchCharacters,
-    TResult Function(int id)? toggleFavorite,
+    TResult Function(int id, void Function(String)? onComplete)? toggleFavorite,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -204,7 +206,8 @@ class _$FetchCharactersImpl implements FetchCharacters {
       String? gender,
     )
     fetchCharacters,
-    required TResult Function(int id) toggleFavorite,
+    required TResult Function(int id, void Function(String)? onComplete)
+    toggleFavorite,
   }) {
     return fetchCharacters(isRefresh, name, status, gender);
   }
@@ -219,7 +222,8 @@ class _$FetchCharactersImpl implements FetchCharacters {
       String? gender,
     )?
     fetchCharacters,
-    TResult? Function(int id)? toggleFavorite,
+    TResult? Function(int id, void Function(String)? onComplete)?
+    toggleFavorite,
   }) {
     return fetchCharacters?.call(isRefresh, name, status, gender);
   }
@@ -234,7 +238,7 @@ class _$FetchCharactersImpl implements FetchCharacters {
       String? gender,
     )?
     fetchCharacters,
-    TResult Function(int id)? toggleFavorite,
+    TResult Function(int id, void Function(String)? onComplete)? toggleFavorite,
     required TResult orElse(),
   }) {
     if (fetchCharacters != null) {
@@ -302,7 +306,7 @@ abstract class _$$ToggleFavoriteImplCopyWith<$Res> {
     $Res Function(_$ToggleFavoriteImpl) then,
   ) = __$$ToggleFavoriteImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int id});
+  $Res call({int id, void Function(String)? onComplete});
 }
 
 /// @nodoc
@@ -318,13 +322,17 @@ class __$$ToggleFavoriteImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null}) {
+  $Res call({Object? id = null, Object? onComplete = freezed}) {
     return _then(
       _$ToggleFavoriteImpl(
         null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as int,
+        onComplete: freezed == onComplete
+            ? _value.onComplete
+            : onComplete // ignore: cast_nullable_to_non_nullable
+                  as void Function(String)?,
       ),
     );
   }
@@ -333,14 +341,16 @@ class __$$ToggleFavoriteImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ToggleFavoriteImpl implements ToggleFavorite {
-  const _$ToggleFavoriteImpl(this.id);
+  const _$ToggleFavoriteImpl(this.id, {this.onComplete});
 
   @override
   final int id;
+  @override
+  final void Function(String)? onComplete;
 
   @override
   String toString() {
-    return 'CharacterEvent.toggleFavorite(id: $id)';
+    return 'CharacterEvent.toggleFavorite(id: $id, onComplete: $onComplete)';
   }
 
   @override
@@ -348,11 +358,13 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ToggleFavoriteImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.onComplete, onComplete) ||
+                other.onComplete == onComplete));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, onComplete);
 
   /// Create a copy of CharacterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -375,9 +387,10 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
       String? gender,
     )
     fetchCharacters,
-    required TResult Function(int id) toggleFavorite,
+    required TResult Function(int id, void Function(String)? onComplete)
+    toggleFavorite,
   }) {
-    return toggleFavorite(id);
+    return toggleFavorite(id, onComplete);
   }
 
   @override
@@ -390,9 +403,10 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
       String? gender,
     )?
     fetchCharacters,
-    TResult? Function(int id)? toggleFavorite,
+    TResult? Function(int id, void Function(String)? onComplete)?
+    toggleFavorite,
   }) {
-    return toggleFavorite?.call(id);
+    return toggleFavorite?.call(id, onComplete);
   }
 
   @override
@@ -405,11 +419,11 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
       String? gender,
     )?
     fetchCharacters,
-    TResult Function(int id)? toggleFavorite,
+    TResult Function(int id, void Function(String)? onComplete)? toggleFavorite,
     required TResult orElse(),
   }) {
     if (toggleFavorite != null) {
-      return toggleFavorite(id);
+      return toggleFavorite(id, onComplete);
     }
     return orElse();
   }
@@ -447,9 +461,13 @@ class _$ToggleFavoriteImpl implements ToggleFavorite {
 }
 
 abstract class ToggleFavorite implements CharacterEvent {
-  const factory ToggleFavorite(final int id) = _$ToggleFavoriteImpl;
+  const factory ToggleFavorite(
+    final int id, {
+    final void Function(String)? onComplete,
+  }) = _$ToggleFavoriteImpl;
 
   int get id;
+  void Function(String)? get onComplete;
 
   /// Create a copy of CharacterEvent
   /// with the given fields replaced by the non-null parameter values.

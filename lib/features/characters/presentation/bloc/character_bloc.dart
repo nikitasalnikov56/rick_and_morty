@@ -26,9 +26,13 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
         event.name != null && event.name != _currentSearchName;
     final bool isStatusChanged =
         event.status != null && event.status != _currentStatus;
-        final bool isGenderChanged = event.gender != null && event.gender != _currentGender;
+    final bool isGenderChanged =
+        event.gender != null && event.gender != _currentGender;
     final bool shouldReset =
-        event.isRefresh || isSearchChanged || isStatusChanged || isGenderChanged;
+        event.isRefresh ||
+        isSearchChanged ||
+        isStatusChanged ||
+        isGenderChanged;
 
     if (shouldReset) {
       _currentSearchName =
@@ -40,8 +44,6 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
     } else {
       emit(state.copyWith(isLoading: true, error: null));
     }
-
- 
 
     try {
       final pageKey = shouldReset ? 1 : (state.keys?.last ?? 0) + 1;
@@ -95,14 +97,20 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
     Emitter<PagingState<int, Character>> emit,
   ) {
     final box = Hive.box<Character>('characters_box');
+    String? toastMessage;
+
     final updatedPages = state.pages?.map((page) {
       return page.map((character) {
         if (character.id == event.id) {
+          final isBecomingFavorite = !character.isFavorite;
           final updatedChar = character.copyWith(
-            isFavorite: !character.isFavorite,
+            isFavorite: isBecomingFavorite,
           );
           box.put(updatedChar.id, updatedChar);
-
+          final action = isBecomingFavorite
+              ? 'Добавлен в избранное'
+              : 'Удален из избранного';
+          toastMessage = '${character.name} $action';
           return updatedChar;
         }
         return character;
@@ -110,5 +118,8 @@ class CharacterBloc extends Bloc<CharacterEvent, PagingState<int, Character>> {
     }).toList();
 
     emit(state.copyWith(pages: updatedPages));
+    if (toastMessage != null && event.onComplete != null) {
+      event.onComplete!(toastMessage!);
+    }
   }
 }
