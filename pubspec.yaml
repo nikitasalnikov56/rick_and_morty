@@ -29,6 +29,7 @@ dependencies:
   lottie: ^3.3.1
   shimmer: ^3.0.0
   shared_preferences: ^2.5.3
+  flutter_native_splash: ^2.4.7
   
 
 dev_dependencies:
@@ -47,6 +48,18 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/images/app_icon.png"
   remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#FFFFFF"           
+  image: assets/images/app_icon.png  
+  
+  color_dark: "#040C23"         
+  image_dark: assets/images/app_icon.png 
+  
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#040C23"
+    
 
 flutter:
 
